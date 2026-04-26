@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soil2Spoon Fresh — Farm Direct Organic Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a6b2e;
+  --green-mid:#2a8c3f;
+  --green-light:#e8f5eb;
+  --green-pale:#f2faf3;
+  --accent:#ff6b35;
+  --accent-light:#fff3ef;
+  --yellow:#f5a623;
+  --text:#1c1c1c;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --bg:#f8faf8;
+  --white:#fff;
+  --shadow:0 2px 12px rgba(0,0,0,0.07);
+  --shadow-hover:0 8px 28px rgba(0,0,0,0.13);
+  --r:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--green);color:#fff;font-size:12.5px;padding:6px 0;text-align:center;letter-spacing:0.02em}
+.topbar span{margin:0 20px}
+.topbar strong{color:#a8e6b5}
+
+/* ── HEADER ── */
+header{background:#fff;border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px;height:68px}
+
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+.logo-mark{width:38px;height:38px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo-text{font-family:'Lora',serif;font-size:1.25rem;font-weight:600;color:var(--green);line-height:1}
+.logo-sub{font-size:9px;font-family:'Nunito',sans-serif;color:var(--muted);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;display:block}
+
+.location-pill{display:flex;align-items:center;gap:6px;background:var(--green-light);border:1.5px solid #b6debb;border-radius:8px;padding:6px 12px;font-size:12.5px;font-weight:700;color:var(--green);cursor:pointer;flex-shrink:0;white-space:nowrap}
+
+.search-bar{flex:1;display:flex;align-items:center;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.2s}
+.search-bar:focus-within{border-color:var(--green)}
+.search-bar input{flex:1;border:none;outline:none;background:transparent;padding:10px 14px;font-size:14px;font-family:'Nunito',sans-serif;color:var(--text)}
+.search-btn{background:var(--green);border:none;padding:0 18px;height:44px;cursor:pointer;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center}
+.search-btn:hover{background:var(--green-mid)}
+
+.header-actions{display:flex;gap:10px;flex-shrink:0}
+.icon-btn{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:8px;transition:background 0.15s;position:relative;text-decoration:none;color:var(--text)}
+.icon-btn:hover{background:var(--green-light)}
+.icon-btn .ico{font-size:20px}
+.icon-btn span{font-size:11px;font-weight:700;color:var(--muted)}
+.cart-badge{position:absolute;top:2px;right:6px;background:var(--accent);color:#fff;font-size:9px;font-weight:800;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ── NAV STRIP ── */
+.nav-strip{background:#fff;border-bottom:1px solid var(--border)}
+.nav-strip-inner{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav-strip-inner::-webkit-scrollbar{display:none}
+.nav-cat{display:flex;align-items:center;gap:7px;padding:11px 18px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:color 0.15s,border-color 0.15s;text-decoration:none}
+.nav-cat:hover,.nav-cat.active{color:var(--green);border-bottom-color:var(--green)}
+.nav-cat .em{font-size:16px}
+
+/* ── LAYOUT ── */
+.main{max-width:1280px;margin:0 auto;padding:24px 20px;display:grid;grid-template-columns:220px 1fr;gap:24px}
+
+/* ── SIDEBAR ── */
+.sidebar{flex-shrink:0}
+.sidebar-section{background:#fff;border-radius:var(--r);border:1px solid var(--border);margin-bottom:14px;overflow:hidden}
+.sidebar-head{padding:13px 16px;font-size:13px;font-weight:800;color:var(--green);border-bottom:1px solid var(--border);background:var(--green-pale)}
+.filter-list{list-style:none;padding:10px 0}
+.filter-item{display:flex;align-items:center;gap:10px;padding:7px 16px;cursor:pointer;font-size:13px;color:var(--text);transition:background 0.15s}
+.filter-item:hover,.filter-item.active{background:var(--green-light);color:var(--green);font-weight:700}
+.filter-item input[type=checkbox]{accent-color:var(--green);width:14px;height:14px}
+.filter-em{font-size:16px}
+.filter-count{margin-left:auto;font-size:11px;color:var(--muted);background:var(--border);border-radius:20px;padding:1px 7px}
+
+/* ── PRODUCTS AREA ── */
+.products-area{}
+
+/* Banner */
+.hero-banner{border-radius:14px;background:linear-gradient(115deg,#1a5c2e 0%,#2a8c3f 60%,#4caf50 100%);padding:28px 32px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative}
+.hero-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.hero-banner::after{content:'🌿';position:absolute;right:160px;top:10px;font-size:80px;opacity:0.15}
+.banner-text h1{font-family:'Lora',serif;font-size:1.8rem;color:#fff;margin-bottom:6px;line-height:1.2}
+.banner-text h1 em{font-style:italic;color:#a8e6b5}
+.banner-text p{font-size:13px;color:rgba(255,255,255,0.8);max-width:340px}
+.banner-emojis{font-size:60px;flex-shrink:0;display:flex;gap:10px;opacity:0.85}
+
+/* Toolbar */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.toolbar-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.result-count{font-size:13.5px;color:var(--muted);font-weight:600}
+.result-count strong{color:var(--text)}
+.sort-select{border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-family:'Nunito',sans-serif;color:var(--text);outline:none;cursor:pointer;background:#fff}
+.sort-select:focus{border-color:var(--green)}
+.chip{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;background:#fff;transition:all 0.15s;color:var(--muted)}
+.chip.active,.chip:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.chip-clear{color:var(--accent);border-color:var(--accent)}
+.chip-clear:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Grid */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+
+/* Card */
+.prod-card{background:#fff;border-radius:var(--r);border:1px solid var(--border);overflow:hidden;transition:box-shadow 0.2s,transform 0.2s;position:relative;cursor:pointer;display:flex;flex-direction:column}
+.prod-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+
+.prod-img-wrap{background:var(--green-pale);position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:72px;overflow:hidden}
+.prod-img-wrap .prod-em{transition:transform 0.3s}
+.prod-card:hover .prod-em{transform:scale(1.1)}
+
+.badge{position:absolute;top:8px;left:8px;background:var(--accent);color:#fff;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:5px}
+.badge.organic{background:var(--green);color:#fff}
+.badge.hot{background:var(--yellow);color:#fff}
+.badge.new{background:#7c3aed;color:#fff}
+
+.wishlist-btn{position:absolute;top:8px;right:8px;background:#fff;border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:all 0.15s;opacity:0;transform:scale(0.8)}
+.prod-card:hover .wishlist-btn{opacity:1;transform:scale(1)}
+.wishlist-btn:hover{background:#fee2e2;border-color:#fca5a5}
+
+.prod-info{padding:12px;flex:1;display:flex;flex-direction:column}
+.prod-brand{font-size:10.5px;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px}
+.prod-name{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.35}
+.prod-weight{font-size:12px;color:var(--muted);margin-bottom:8px}
+
+.prod-rating{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+.stars{background:var(--green);color:#fff;font-size:10.5px;font-weight:700;padding:2px 6px;border-radius:4px;display:flex;align-items:center;gap:2px}
+.rating-count{font-size:11px;color:var(--muted)}
+
+.prod-price-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.prod-price{font-size:16px;font-weight:900;color:var(--text)}
+.prod-mrp{font-size:12px;color:var(--muted);text-decoration:line-through}
+.prod-off{font-size:11px;font-weight:800;color:var(--accent)}
+
+.add-btn{width:100%;padding:8px 0;background:var(--green);color:#fff;border:none;border-radius:7px;font-size:13.5px;font-weight:800;cursor:pointer;transition:background 0.15s,transform 0.1s;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:auto}
+.add-btn:hover{background:var(--green-mid)}
+.add-btn:active{transform:scale(0.97)}
+
+.qty-ctrl{display:none;align-items:center;justify-content:space-between;gap:0;border-radius:7px;overflow:hidden;border:2px solid var(--green);margin-top:auto}
+.qty-ctrl.show{display:flex}
+.qty-btn{background:#fff;border:none;color:var(--green);font-size:18px;font-weight:900;padding:5px 14px;cursor:pointer;transition:background 0.15s;font-family:'Nunito',sans-serif}
+.qty-btn:hover{background:var(--green-light)}
+.qty-num{font-size:14px;font-weight:800;color:var(--green);min-width:28px;text-align:center}
+
+/* ── CART SIDEBAR ── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:-400px;width:380px;height:100%;background:#fff;z-index:501;box-shadow:-8px 0 40px rgba(0,0,0,0.15);display:flex;flex-direction:column;transition:right 0.3s cubic-bezier(.4,0,.2,1)}
+.cart-drawer.open{right:0}
+.cart-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--green-pale)}
+.cart-header h2{font-size:17px;font-weight:800;color:var(--green)}
+.cart-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);padding:4px;border-radius:6px}
+.cart-close:hover{background:var(--border)}
+.cart-items{flex:1;overflow-y:auto;padding:16px}
+.cart-empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.cart-empty .em{font-size:60px;margin-bottom:12px;display:block}
+.cart-empty p{font-weight:700;font-size:15px}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.ci-em{font-size:36px;width:52px;height:52px;background:var(--green-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:700;margin-bottom:3px}
+.ci-weight{font-size:11px;color:var(--muted)}
+.ci-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.ci-price{font-size:14px;font-weight:900;color:var(--green)}
+.ci-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;font-weight:700;padding:3px 6px;border-radius:4px}
+.ci-remove:hover{background:#fee2e2;color:#dc2626}
+
+.cart-footer{padding:16px;border-top:2px solid var(--border);background:#fff}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:14px;font-size:15px;font-weight:800}
+.cart-total-row span:last-child{color:var(--green);font-size:18px}
+.checkout-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background 0.15s}
+.checkout-btn:hover{background:var(--green-mid)}
+.free-delivery-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:8px;font-weight:600}
+
+/* ── FOOTER ── */
+footer{background:#1c2e1f;color:rgba(255,255,255,0.6);margin-top:60px;padding:40px 20px}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-brand .logo-text{color:#a8e6b5;font-size:1.3rem}
+.footer-brand p{font-size:12.5px;margin-top:10px;line-height:1.7;color:rgba(255,255,255,0.5)}
+.footer-col h4{font-size:13px;font-weight:800;color:#fff;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.04em}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:8px;font-size:12.5px}
+.footer-col a{color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.15s}
+.footer-col a:hover{color:#a8e6b5}
+.footer-bottom{max-width:1280px;margin:24px auto 0;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px;color:rgba(255,255,255,0.35)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--green);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:900;opacity:0;transform:translateY(14px);transition:all 0.3s;pointer-events:none;display:flex;align-items:center;gap:8px}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .main{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .banner-emojis{display:none}
+  .header-inner{gap:10px}
+  .location-pill{display:none}
+}
+@media(max-width:600px){
+  .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .footer-inner{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>🌿 <strong>100% Chemical-Free</strong> — Straight from Wayanad Farms</span>
+  <span>🚚 <strong>Free delivery</strong> above ₹299</span>
+  <span>📲 Order via <strong>WhatsApp</strong></span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">🌱</div>
+      <div>
+        <span class="logo-text">Soil2Spoon</span>
+        <span class="logo-sub">Fresh · Organic · Farm Direct</span>
+      </div>
+    </a>
+
+    <div class="location-pill">
+      📍 Wayanad, Kerala
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search for tomatoes, spinach, eggs..." id="searchInput" oninput="filterProducts()">
+      <button class="search-btn">🔍</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn">
+        <span class="ico">👤</span>
+        <span>Account</span>
+      </button>
+      <button class="icon-btn" onclick="toggleCart()">
+        <span class="ico">🛒</span>
+        <span>Cart</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV STRIP -->
+<div class="nav-strip">
+  <div class="nav-strip-inner">
+    <a class="nav-cat active" onclick="filterCat('all',this)"><span class="em">🛒</span> All</a>
+    <a class="nav-cat" onclick="filterCat('vegetables',this)"><span class="em">🥦</span> Vegetables</a>
+    <a class="nav-cat" onclick="filterCat('fruits',this)"><span class="em">🍎</span> Fruits</a>
+    <a class="nav-cat" onclick="filterCat('leafy',this)"><span class="em">🥬</span> Leafy & Herbs</a>
+    <a class="nav-cat" onclick="filterCat('eggs',this)"><span class="em">🥚</span> Eggs & Dairy</a>
+    <a class="nav-cat" onclick="filterCat('roots',this)"><span class="em">🥕</span> Roots & Tubers</a>
+    <a class="nav-cat" onclick="filterCat('baskets',this)"><span class="em">📦</span> Weekly Baskets</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-head">Shop by Category</div>
+      <ul class="filter-list">
+        <li class="filter-item active" onclick="filterCat('all',null)"><span class="filter-em">🛒</span> All Products <span class="filter-count">42</span></li>
+        <li class="filter-item" onclick="filterCat('vegetables',null)"><span class="filter-em">🥦</span> Vegetables <span class="filter-count">14</span></li>
+        <li class="filter-item" onclick="filterCat('fruits',null)"><span class="filter-em">🍎</span> Fruits <span class="filter-count">8</span></li>
+        <li class="filter-item" onclick="filterCat('leafy',null)"><span class="filter-em">🥬</span> Leafy & Herbs <span class="filter-count">7</span></li>
+        <li class="filter-item" onclick="filterCat('eggs',null)"><span class="filter-em">🥚</span> Eggs & Dairy <span class="filter-count">5</span></li>
+        <li class="filter-item" onclick="filterCat('roots',null)"><span class="filter-em">🥕</span> Roots & Tubers <span class="filter-count">5</span></li>
+        <li class="filter-item" onclick="filterCat('baskets',null)"><span class="filter-em">📦</span> Weekly Baskets <span class="filter-count">3</span></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">Filter by Price</div>
+      <ul class="filter-list">
+        <li class="filter-item"><input type="checkbox"> Under ₹30</li>
+        <li class="filter-item"><input type="checkbox"> ₹30 – ₹60</li>
+        <li class="filter-item"><input type="checkbox"> ₹60 – ₹100</li>
+        <li class="filter-item"><input type="checkbox"> ₹100 – ₹200</li>
+        <li class="filter-item"><input type="checkbox"> Above ₹200</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">Certifications</div>
+      <ul class="filter-list">
+        <li class="filter-item"><input type="checkbox"> 🌿 100% Organic</li>
+        <li class="filter-item"><input type="checkbox"> 🚫 Chemical-Free</li>
+        <li class="filter-item"><input type="checkbox"> 🌾 Farm Direct</li>
+        <li class="filter-item"><input type="checkbox"> 🆕 New Arrival</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-head">Seasonal</div>
+      <ul class="filter-list">
+        <li class="filter-item"><input type="checkbox"> ☀️ Summer Picks</li>
+        <li class="filter-item"><input type="checkbox"> 🌧️ Monsoon Specials</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- PRODUCTS AREA -->
+  <div class="products-area">
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="banner-text">
+        <h1>Farm-Fresh, <em>Zero Chemicals</em></h1>
+        <p>Directly from Wayanad farmers to your kitchen — honest food at honest prices.</p>
+      </div>
+      <div class="banner-emojis">🥦🍅🥕</div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <span class="result-count"><strong id="resultCount">24</strong> products found</span>
+        <span class="chip active" onclick="setFilter('all',this)">All</span>
+        <span class="chip" onclick="setFilter('organic',this)">🌿 Organic Only</span>
+        <span class="chip" onclick="setFilter('deals',this)">🔥 Best Deals</span>
+        <span class="chip chip-clear" onclick="clearFilters()">✕ Clear</span>
+      </div>
+      <select class="sort-select" onchange="sortProducts(this.value)">
+        <option value="relevance">Sort: Relevance</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="discount">Highest Discount</option>
+        <option value="rating">Best Rated</option>
+      </select>
+    </div>
+
+    <!-- Grid -->
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2>🛒 Your Cart</h2>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <span class="em">🛒</span>
+      <p>Your cart is empty</p>
+      <p style="font-size:13px;margin-top:6px;font-weight:400">Add fresh produce to get started!</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total-row">
+      <span>Total Amount</span>
+      <span id="cartTotal">₹0</span>
+    </div>
+    <button class="checkout-btn">Proceed to Checkout →</button>
+    <p class="free-delivery-note">🚚 Free delivery on orders above ₹299</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Added to cart!</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text" style="font-family:'Lora',serif;font-size:1.3rem">Soil2Spoon Fresh</div>
+      <p>Bridging Wayanad's farmers and urban families — one chemical-free basket at a time. Grown with love, delivered with care.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Vegetables</a></li>
+        <li><a href="#">Fruits</a></li>
+        <li><a href="#">Leafy Greens</a></li>
+        <li><a href="#">Eggs & Dairy</a></li>
+        <li><a href="#">Weekly Baskets</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">How to Order</a></li>
+        <li><a href="#">Delivery Info</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="#">Our Mission</a></li>
+        <li><a href="#">Our Farmers</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Soil2Spoon Fresh, Wayanad, Kerala</span>
+    <span>📲 Order on WhatsApp · Follow us @soil2spoonfresh</span>
+  </div>
+</footer>
+
+<script>
+const products = [
+  {id:1,name:'Tomato – Local',brand:'Soil2Spoon',cat:'vegetables',em:'🍅',weight:'1 kg',price:32,mrp:55,off:42,rating:4.5,reviews:128,badge:'deal',organic:true},
+  {id:2,name:'Potato',brand:'Soil2Spoon',cat:'roots',em:'🥔',weight:'1 kg',price:38,mrp:55,off:31,rating:4.3,reviews:95,badge:'',organic:true},
+  {id:3,name:'Carrot – Orange',brand:'Soil2Spoon',cat:'roots',em:'🥕',weight:'500 g',price:42,mrp:65,off:35,rating:4.6,reviews:214,badge:'organic',organic:true},
+  {id:4,name:'Coriander Leaves',brand:'Soil2Spoon',cat:'leafy',em:'🌿',weight:'100 g',price:18,mrp:25,off:28,rating:4.4,reviews:76,badge:'',organic:true},
+  {id:5,name:'Onion',brand:'Soil2Spoon',cat:'vegetables',em:'🧅',weight:'1 kg',price:35,mrp:50,off:30,rating:4.2,reviews:187,badge:'deal',organic:false},
+  {id:6,name:"Ladies' Finger (Okra)",brand:'Soil2Spoon',cat:'vegetables',em:'🌿',weight:'250 g',price:22,mrp:35,off:37,rating:4.5,reviews:63,badge:'organic',organic:true},
+  {id:7,name:'Cucumber',brand:'Soil2Spoon',cat:'vegetables',em:'🥒',weight:'500 g',price:28,mrp:40,off:30,rating:4.3,reviews:89,badge:'',organic:true},
+  {id:8,name:'Spinach (Palak)',brand:'Soil2Spoon',cat:'leafy',em:'🥬',weight:'250 g',price:20,mrp:28,off:29,rating:4.7,reviews:145,badge:'organic',organic:true},
+  {id:9,name:'Cauliflower',brand:'Soil2Spoon',cat:'vegetables',em:'🥦',weight:'1 pc (~500g)',price:45,mrp:80,off:44,rating:4.4,reviews:52,badge:'deal',organic:true},
+  {id:10,name:'Capsicum – Green',brand:'Soil2Spoon',cat:'vegetables',em:'🫑',weight:'250 g',price:35,mrp:55,off:36,rating:4.3,reviews:71,badge:'',organic:true},
+  {id:11,name:'Curry Leaves',brand:'Soil2Spoon',cat:'leafy',em:'🍃',weight:'100 g',price:15,mrp:20,off:25,rating:4.6,reviews:108,badge:'',organic:true},
+  {id:12,name:'Tomato – Hybrid',brand:'Soil2Spoon',cat:'vegetables',em:'🍅',weight:'500 g',price:28,mrp:42,off:33,rating:4.2,reviews:49,badge:'',organic:false},
+  {id:13,name:'Beans – Haricot',brand:'Soil2Spoon',cat:'vegetables',em:'🫘',weight:'250 g',price:30,mrp:48,off:38,rating:4.4,reviews:33,badge:'organic',organic:true},
+  {id:14,name:'Methi / Fenugreek',brand:'Soil2Spoon',cat:'leafy',em:'🌿',weight:'200 g',price:22,mrp:30,off:27,rating:4.3,reviews:58,badge:'',organic:true},
+  {id:15,name:'Sweet Potato',brand:'Soil2Spoon',cat:'roots',em:'🍠',weight:'500 g',price:48,mrp:70,off:31,rating:4.5,reviews:82,badge:'hot',organic:true},
+  {id:16,name:'Bottle Gourd',brand:'Soil2Spoon',cat:'vegetables',em:'🥬',weight:'1 pc (~700g)',price:22,mrp:38,off:42,rating:4.1,reviews:27,badge:'deal',organic:true},
+  {id:17,name:'Ridge Gourd',brand:'Soil2Spoon',cat:'vegetables',em:'🥒',weight:'500 g',price:30,mrp:44,off:32,rating:4.2,reviews:44,badge:'',organic:true},
+  {id:18,name:'Banana – Nendran',brand:'Soil2Spoon',cat:'fruits',em:'🍌',weight:'1 kg',price:55,mrp:80,off:31,rating:4.7,reviews:198,badge:'hot',organic:true},
+  {id:19,name:'Pineapple',brand:'Soil2Spoon',cat:'fruits',em:'🍍',weight:'1 pc (~1kg)',price:65,mrp:90,off:28,rating:4.6,reviews:86,badge:'organic',organic:true},
+  {id:20,name:'Papaya',brand:'Soil2Spoon',cat:'fruits',em:'🧡',weight:'1 pc (~800g)',price:55,mrp:75,off:27,rating:4.4,reviews:62,badge:'',organic:true},
+  {id:21,name:'Mango – Alphonso',brand:'Soil2Spoon',cat:'fruits',em:'🥭',weight:'1 kg',price:180,mrp:250,off:28,rating:4.9,reviews:312,badge:'hot',organic:true},
+  {id:22,name:'Jackfruit – Ripe',brand:'Soil2Spoon',cat:'fruits',em:'🍈',weight:'500 g',price:75,mrp:100,off:25,rating:4.6,reviews:54,badge:'organic',organic:true},
+  {id:23,name:'Free-Range Eggs',brand:'Soil2Spoon',cat:'eggs',em:'🥚',weight:'6 pcs',price:72,mrp:90,off:20,rating:4.8,reviews:284,badge:'organic',organic:true},
+  {id:24,name:'Fresh Cow Milk',brand:'Soil2Spoon',cat:'eggs',em:'🥛',weight:'500 ml',price:35,mrp:45,off:22,rating:4.7,reviews:176,badge:'new',organic:true},
+  {id:25,name:'Drumstick (Moringa)',brand:'Soil2Spoon',cat:'vegetables',em:'🪵',weight:'250 g',price:25,mrp:38,off:34,rating:4.3,reviews:41,badge:'',organic:true},
+  {id:26,name:'Ginger',brand:'Soil2Spoon',cat:'roots',em:'🫚',weight:'100 g',price:18,mrp:28,off:36,rating:4.5,reviews:93,badge:'organic',organic:true},
+  {id:27,name:'Garlic',brand:'Soil2Spoon',cat:'roots',em:'🧄',weight:'100 g',price:22,mrp:35,off:37,rating:4.4,reviews:117,badge:'',organic:true},
+  {id:28,name:'Tulsi / Holy Basil',brand:'Soil2Spoon',cat:'leafy',em:'🌿',weight:'50 g',price:15,mrp:20,off:25,rating:4.8,reviews:68,badge:'organic',organic:true},
+  {id:29,name:'Mint Leaves',brand:'Soil2Spoon',cat:'leafy',em:'🍃',weight:'50 g',price:14,mrp:18,off:22,rating:4.6,reviews:55,badge:'',organic:true},
+  {id:30,name:'Brinjal – Purple',brand:'Soil2Spoon',cat:'vegetables',em:'🍆',weight:'500 g',price:28,mrp:42,off:33,rating:4.2,reviews:38,badge:'',organic:true},
+  {id:31,name:'Weekly Veggie Basket',brand:'Soil2Spoon',cat:'baskets',em:'🧺',weight:'~3 kg assorted',price:249,mrp:380,off:34,rating:4.9,reviews:428,badge:'hot',organic:true},
+  {id:32,name:'Family Fresh Basket',brand:'Soil2Spoon',cat:'baskets',em:'📦',weight:'~5 kg assorted',price:399,mrp:580,off:31,rating:4.8,reviews:216,badge:'new',organic:true},
+  {id:33,name:'Healthy Starter Basket',brand:'Soil2Spoon',cat:'baskets',em:'🌿',weight:'~2 kg + eggs',price:199,mrp:290,off:31,rating:4.7,reviews:143,badge:'organic',organic:true},
+];
+
+let cart = {};
+let activeFilter = {cat:'all', tag:'all', search:''};
+
+function renderProducts(list){
+  const grid = document.getElementById('productsGrid');
+  document.getElementById('resultCount').textContent = list.length;
+  if(!list.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted)"><div style="font-size:48px;margin-bottom:12px">😕</div><p style="font-size:16px;font-weight:700">No products found</p></div>';
+    return;
+  }
+  grid.innerHTML = list.map(p=>{
+    const qty = cart[p.id]||0;
+    const badgeHtml = p.badge==='deal'?`<span class="badge">${p.off}% OFF</span>`:
+                      p.badge==='organic'?`<span class="badge organic">🌿 Organic</span>`:
+                      p.badge==='hot'?`<span class="badge hot">🔥 Popular</span>`:
+                      p.badge==='new'?`<span class="badge new">✨ New</span>`:'';
+    return `<div class="prod-card" id="card-${p.id}">
+      <div class="prod-img-wrap">
+        <span class="prod-em">${p.em}</span>
+        ${badgeHtml}
+        <button class="wishlist-btn" onclick="event.stopPropagation()">🤍</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-brand">${p.brand}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-weight">${p.weight}</div>
+        <div class="prod-rating">
+          <span class="stars">⭐ ${p.rating}</span>
+          <span class="rating-count">(${p.reviews})</span>
+        </div>
+        <div class="prod-price-row">
+          <span class="prod-price">₹${p.price}</span>
+          <span class="prod-mrp">₹${p.mrp}</span>
+          <span class="prod-off">${p.off}% off</span>
+        </div>
+        ${qty===0
+          ? `<button class="add-btn" onclick="addToCart(${p.id})">+ Add to Cart</button>`
+          : `<div class="qty-ctrl show" id="qty-${p.id}">
+               <button class="qty-btn" onclick="changeQty(${p.id},-1)">−</button>
+               <span class="qty-num">${qty}</span>
+               <button class="qty-btn" onclick="changeQty(${p.id},1)">+</button>
+             </div>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addToCart(id){
+  cart[id] = (cart[id]||0)+1;
+  renderFiltered();
+  updateCartBadge();
+  showToast();
+}
+
+function changeQty(id,delta){
+  cart[id] = Math.max(0,(cart[id]||0)+delta);
+  if(cart[id]===0) delete cart[id];
+  renderFiltered();
+  updateCartBadge();
+}
+
+function updateCartBadge(){
+  const total = Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartBadge').textContent = total;
+}
+
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+function toggleCart(){
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+  renderCartDrawer();
+}
+
+function renderCartDrawer(){
+  const items = Object.entries(cart);
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  if(!items.length){
+    el.innerHTML=`<div class="cart-empty"><span class="em">🛒</span><p>Your cart is empty</p><p style="font-size:13px;margin-top:6px;font-weight:400">Add fresh produce to get started!</p></div>`;
+    footer.style.display='none';
+    return;
+  }
+  let total = 0;
+  el.innerHTML = items.map(([id,qty])=>{
+    const p = products.find(x=>x.id==id);
+    total += p.price*qty;
+    return `<div class="cart-item">
+      <div class="ci-em">${p.em}</div>
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-weight">${p.weight} × ${qty}</div>
+        <div class="ci-bottom">
+          <span class="ci-price">₹${p.price*qty}</span>
+          <button class="ci-remove" onclick="removeFromCart(${id})">Remove</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('cartTotal').textContent = '₹'+total;
+  footer.style.display='block';
+}
+
+function removeFromCart(id){
+  delete cart[id];
+  updateCartBadge();
+  renderCartDrawer();
+  renderFiltered();
+}
+
+function filterCat(cat, el){
+  activeFilter.cat = cat;
+  document.querySelectorAll('.nav-cat').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.filter-item').forEach(e=>e.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderFiltered();
+}
+
+function setFilter(tag, el){
+  activeFilter.tag = tag;
+  document.querySelectorAll('.chip').forEach(e=>e.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderFiltered();
+}
+
+function clearFilters(){
+  activeFilter = {cat:'all', tag:'all', search:''};
+  document.querySelectorAll('.chip').forEach(e=>e.classList.remove('active'));
+  document.querySelector('.chip').classList.add('active');
+  document.getElementById('searchInput').value='';
+  document.querySelectorAll('.nav-cat').forEach((e,i)=>{if(i===0)e.classList.add('active');else e.classList.remove('active')});
+  renderFiltered();
+}
+
+function filterProducts(){
+  activeFilter.search = document.getElementById('searchInput').value.toLowerCase();
+  renderFiltered();
+}
+
+let sortMode = 'relevance';
+function sortProducts(val){
+  sortMode = val;
+  renderFiltered();
+}
+
+function renderFiltered(){
+  let list = [...products];
+  if(activeFilter.cat!=='all') list = list.filter(p=>p.cat===activeFilter.cat);
+  if(activeFilter.tag==='organic') list = list.filter(p=>p.organic);
+  if(activeFilter.tag==='deals') list = list.filter(p=>p.off>=30);
+  if(activeFilter.search) list = list.filter(p=>p.name.toLowerCase().includes(activeFilter.search)||p.cat.includes(activeFilter.search));
+  if(sortMode==='price-low') list.sort((a,b)=>a.price-b.price);
+  else if(sortMode==='price-high') list.sort((a,b)=>b.price-a.price);
+  else if(sortMode==='discount') list.sort((a,b)=>b.off-a.off);
+  else if(sortMode==='rating') list.sort((a,b)=>b.rating-a.rating);
+  renderProducts(list);
+}
+
+renderFiltered();
+</script>
+
+</body>
+</html>
